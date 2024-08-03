@@ -38,10 +38,10 @@ MKDIR := mkdir -p
 all: $(NAME) # Build all
 
 $(NAME): $(LIBFT) $(BINS)
-	$(CC) $(CPPFLAGS) $(BINS) -o $(NAME)
+	$(CC) $(BINS) $(CPPFLAGS) -o $(NAME) $(LDFLAGS) -lft
 
 $(BINS): $(BINDIR)/%.o: $(SRCDIR)/%.c | $(BINDIR)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -c $^ -o $@
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $^ -o $@ 
 
 $(BINDIR):
 	$(MKDIR) $(BINDIR)
