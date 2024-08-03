@@ -8,6 +8,7 @@ BINDIR := build
 
 # Files
 SRCS := main
+
 BINS := $(SRCS:%=$(BINDIR)/%.o)
 
 # Libraries
@@ -41,7 +42,7 @@ $(NAME): $(LIBFT) $(BINS)
 	$(CC) $(BINS) $(CPPFLAGS) -o $(NAME) $(LDFLAGS) -lft
 
 $(BINS): $(BINDIR)/%.o: $(SRCDIR)/%.c | $(BINDIR)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $^ -o $@ 
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $^ -o $@
 
 $(BINDIR):
 	$(MKDIR) $(BINDIR)
