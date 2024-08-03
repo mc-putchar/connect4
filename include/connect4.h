@@ -15,6 +15,10 @@
 
 # include <stdlib.h>
 # include <time.h>
+# include <stdio.h>
+# include "libft.h"
+
+# include "messages.h"
 
 # include "messages.h"
 
@@ -53,5 +57,12 @@ int		determine_first_player(void);
 
 // utils
 int		max(int a, int b);
+
+//queue.c
+void	queue_print(t_board **heap, int heap_size);
+void	queue_push(t_board **heap, t_board *new, int *heap_size);
+void	queue_pop(t_board **heap, int *heap_size);
+void	queue_update(t_board **heap, int *heap_size, int index);
+int		queue_assert(t_board **heap, int heap_size);
 
 #endif
