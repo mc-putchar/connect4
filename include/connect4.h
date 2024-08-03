@@ -6,7 +6,7 @@
 /*   By: mcutura <mcutura@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 15:51:11 by mcutura           #+#    #+#             */
-/*   Updated: 2024/08/03 20:23:14 by mcutura          ###   ########.fr       */
+/*   Updated: 2024/08/04 01:07:32 by mcutura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <time.h>
 # include <stdio.h>
 # include "libft.h"
+
+# include "messages.h"
 
 # include "messages.h"
 
@@ -55,6 +57,7 @@ int		determine_first_player(void);
 
 // utils
 int		max(int a, int b);
+
 //queue.c
 void	queue_print(t_board **heap, int heap_size);
 void	queue_push(t_board **heap, t_board *new, int *heap_size);

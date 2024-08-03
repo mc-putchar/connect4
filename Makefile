@@ -8,6 +8,7 @@ BINDIR := build
 
 # Files
 SRCS := main init utils display board_ops game_state queue
+
 BINS := $(SRCS:%=$(BINDIR)/%.o)
 
 # Libraries
