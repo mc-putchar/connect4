@@ -18,6 +18,8 @@
 # include <stdio.h>
 # include "libft.h"
 
+# include "messages.h"
+
 typedef struct s_board
 {
 	char	**map;
@@ -32,11 +34,27 @@ typedef struct s_board
 # define SECOND 'O'
 # define MAX_NODE_NB 300000
 
-int	max(int a, int b);
+// init
+int		init_game(t_board *board, char *av1, char *av2);
+int		choose_turn(void);
 
-int	update_heuristic(t_board *new);
-int	new_state(t_board *old, t_board *new, int col_nb, char player);
+// board_ops
+int		update_heuristic(t_board *new);
+int		new_state(t_board *old, t_board *new, int col_nb, char player);
 
+// game_state
+int		is_gameover(t_board *board);
+int		make_move(t_board *board, int move, char player);
+void	game_loop(t_board *board);
+
+// display
+void	print_board(t_board *board);
+int		prompt_user_move(t_board *board, char player);
+void	display_gameover(t_board *board, int gameover, int player);
+int		determine_first_player(void);
+
+// utils
+int		max(int a, int b);
 //queue.c
 void	queue_print(t_board **heap, int heap_size);
 void	queue_push(t_board **heap, t_board *new, int *heap_size);
