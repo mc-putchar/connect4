@@ -7,7 +7,7 @@ LIBDIR := lib
 BINDIR := build
 
 # Files
-SRCS := main
+SRCS := main init utils display board_ops game_state
 BINS := $(SRCS:%=$(BINDIR)/%.o)
 
 # Libraries
@@ -33,7 +33,7 @@ COLOUR_CYNB := \033[1;36m
 MKDIR := mkdir -p
 
 # Rules
-.PHONY: all bonus clean debug fclean re
+.PHONY: all bonus clean debug fclean re help
 
 all: $(NAME) # Build all
 
