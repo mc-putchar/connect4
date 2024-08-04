@@ -6,11 +6,12 @@
 /*   By: mcutura <mcutura@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 23:06:03 by mcutura           #+#    #+#             */
-/*   Updated: 2024/08/04 01:11:39 by mcutura          ###   ########.fr       */
+/*   Updated: 2024/08/04 22:57:29 by mcutura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "connect4.h"
+#include "messages.h"
 
 int	is_gameover(t_board *board)
 {
@@ -112,21 +113,32 @@ int	make_move(t_board *board, int move, char player)
 
 void	game_loop(t_board *board)
 {
-	int const	player_first = determine_first_player();
-	int			gameover = 0;
-	int			round = 1;
+	t_game		game;
+	int const	player_first = determine_first_player(&game);
+	int			gameover;
+	int			opponent_move;
 
+	gameover = 0;
+	if (board->width >= PRINTABLE_SIZE)
+		ft_printf(BOARD_TOO_LARGE);
 	while (!(gameover = is_gameover(board)))
 	{
-		print_board(board);
-		if ((round & 1) == player_first)
+		if (board->width < PRINTABLE_SIZE)
+			print_board(board);
+		if ((game.round & 1) == player_first)
 		{
-			while (prompt_user_move(board, (round & 1) ? FIRST : SECOND))
+			while (prompt_user_move(board, game.player))
 				;
 		} else {
-			; // TODO: bot move
+			ft_printf(THINKING);
+			if (game.round == 1)
+				opponent_move = 3; // random
+			else
+				opponent_move = calculate_move(board, &game);
+			make_move(board, opponent_move, game.bot);
+			ft_printf("%s%d\n", OPPONENT_MOVE, opponent_move + 1);
 		}
-		++round;
+		++game.round;
 	}
 	display_gameover(board, gameover, player_first);
 }
