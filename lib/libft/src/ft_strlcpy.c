@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcutura <mcutura@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/03 15:50:17 by mcutura           #+#    #+#             */
-/*   Updated: 2024/08/04 18:45:33 by mcutura          ###   ########.fr       */
+/*   Created: 2023/03/17 19:58:02 by mcutura           #+#    #+#             */
+/*   Updated: 2024/03/16 14:12:18 by mcutura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "connect4.h"
+#include <stddef.h>
 
-int	main(int ac, char **av)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	t_board		board;
+	size_t	srclen;
+	size_t	i;
 
-	if (ac != 3)
+	srclen = 0;
+	while (src[srclen])
+		++srclen;
+	if (size && src && dst)
 	{
-		ft_dprintf(STDERR_FILENO, USAGE);
-		return (EXIT_FAILURE);
+		if (size > srclen)
+			size = srclen + 1;
+		i = 0;
+		while (i < size - 1)
+		{
+			dst[i] = src[i];
+			++i;
+		}
+		dst[i] = 0;
 	}
-	if (init_game(&board, av[1], av[2]))
-		return (EXIT_FAILURE);
-	
-	game_loop(&board);
-
-	for (int i = 0; i < board.height; ++i)
-		free(board.map[i]);
-	free(board.map);
-	return (EXIT_SUCCESS);
+	return (srclen);
 }
-
-

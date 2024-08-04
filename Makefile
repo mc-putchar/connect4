@@ -7,7 +7,8 @@ LIBDIR := lib
 BINDIR := build
 
 # Files
-SRCS := main
+SRCS := main init utils display board_ops game_state queue montecarlo
+
 BINS := $(SRCS:%=$(BINDIR)/%.o)
 
 # Libraries
@@ -19,7 +20,9 @@ CC := cc
 CFLAGS := -Wall -Wextra -Werror
 debug: CFLAGS += -ggdb3 -Og
 CPPFLAGS := -I$(INCDIR) -I$(LIBFTDIR)/include
+debug: CPPFLAGS += -DDEBUG=1
 LDFLAGS := -L$(LIBFTDIR)
+LDLIBS := -lft
 
 # Colors
 COLOUR_END := \033[0m
@@ -33,15 +36,15 @@ COLOUR_CYNB := \033[1;36m
 MKDIR := mkdir -p
 
 # Rules
-.PHONY: all bonus clean debug fclean re
+.PHONY: all bonus clean debug fclean re help
 
 all: $(NAME) # Build all
 
 $(NAME): $(LIBFT) $(BINS)
-	$(CC) $(CPPFLAGS) $(BINS) -o $(NAME)
+	$(CC) $(BINS) $(CPPFLAGS) -o $(NAME) $(LDFLAGS) $(LDLIBS)
 
 $(BINS): $(BINDIR)/%.o: $(SRCDIR)/%.c | $(BINDIR)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -c $^ -o $@
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $^ -o $@ 
 
 $(BINDIR):
 	$(MKDIR) $(BINDIR)
@@ -50,6 +53,8 @@ $(LIBFT):
 	$(MAKE) -C $(LIBFTDIR) $(MAKECMDGOALS)
 
 bonus: # Build bonus
+
+debug: clean all # Build for debug
 
 clean: # Remove compiled binary objects
 	$(RM) -fr $(BINDIR)

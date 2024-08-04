@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcutura <mcutura@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/03 15:50:17 by mcutura           #+#    #+#             */
-/*   Updated: 2024/08/04 18:45:33 by mcutura          ###   ########.fr       */
+/*   Created: 2023/03/17 22:07:53 by mcutura           #+#    #+#             */
+/*   Updated: 2024/03/16 14:08:48 by mcutura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "connect4.h"
+#include <stddef.h>
 
-int	main(int ac, char **av)
+void	*ft_memcpy(void	*dest, const void *src, size_t n)
 {
-	t_board		board;
+	size_t	i;
 
-	if (ac != 3)
+	i = 0;
+	while (i + (sizeof(size_t)) <= n)
 	{
-		ft_dprintf(STDERR_FILENO, USAGE);
-		return (EXIT_FAILURE);
+		((size_t *)dest)[i / (sizeof(size_t))] = \
+			((size_t *)src)[i / (sizeof(size_t))];
+		i += (sizeof(size_t));
 	}
-	if (init_game(&board, av[1], av[2]))
-		return (EXIT_FAILURE);
-	
-	game_loop(&board);
-
-	for (int i = 0; i < board.height; ++i)
-		free(board.map[i]);
-	free(board.map);
-	return (EXIT_SUCCESS);
+	while (i < n)
+	{
+		((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
+		++i;
+	}
+	return (dest);
 }
-
-

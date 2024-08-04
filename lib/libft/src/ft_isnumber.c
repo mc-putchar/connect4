@@ -1,35 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isnumber.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcutura <mcutura@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/03 15:50:17 by mcutura           #+#    #+#             */
-/*   Updated: 2024/08/04 18:45:33 by mcutura          ###   ########.fr       */
+/*   Created: 2024/04/16 23:15:24 by mcutura           #+#    #+#             */
+/*   Updated: 2024/06/22 02:39:39 by mcutura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "connect4.h"
-
-int	main(int ac, char **av)
+int	ft_isnumber(char const *str)
 {
-	t_board		board;
-
-	if (ac != 3)
+	if (*str == '-' || *str == '+')
+		++str;
+	while (*str)
 	{
-		ft_dprintf(STDERR_FILENO, USAGE);
-		return (EXIT_FAILURE);
+		if (*str < '0' || *str > '9')
+			return (0);
+		++str;
 	}
-	if (init_game(&board, av[1], av[2]))
-		return (EXIT_FAILURE);
-	
-	game_loop(&board);
-
-	for (int i = 0; i < board.height; ++i)
-		free(board.map[i]);
-	free(board.map);
-	return (EXIT_SUCCESS);
+	return (1);
 }
-
-

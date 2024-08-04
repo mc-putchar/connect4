@@ -1,35 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcutura <mcutura@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/03 15:50:17 by mcutura           #+#    #+#             */
-/*   Updated: 2024/08/04 18:45:33 by mcutura          ###   ########.fr       */
+/*   Created: 2023/03/18 17:55:17 by mcutura           #+#    #+#             */
+/*   Updated: 2024/03/16 14:10:30 by mcutura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "connect4.h"
+#include <sys/types.h>
+#include <unistd.h>
 
-int	main(int ac, char **av)
+ssize_t	ft_putchar_fd(char c, int fd)
 {
-	t_board		board;
-
-	if (ac != 3)
-	{
-		ft_dprintf(STDERR_FILENO, USAGE);
-		return (EXIT_FAILURE);
-	}
-	if (init_game(&board, av[1], av[2]))
-		return (EXIT_FAILURE);
-	
-	game_loop(&board);
-
-	for (int i = 0; i < board.height; ++i)
-		free(board.map[i]);
-	free(board.map);
-	return (EXIT_SUCCESS);
+	return (write(fd, &c, 1));
 }
-
-

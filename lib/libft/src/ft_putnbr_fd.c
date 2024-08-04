@@ -1,35 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcutura <mcutura@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/03 15:50:17 by mcutura           #+#    #+#             */
-/*   Updated: 2024/08/04 18:45:33 by mcutura          ###   ########.fr       */
+/*   Created: 2023/03/18 18:00:52 by mcutura           #+#    #+#             */
+/*   Updated: 2024/03/16 14:12:18 by mcutura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "connect4.h"
+#include <unistd.h>
+#include <sys/types.h>
 
-int	main(int ac, char **av)
+ssize_t	ft_putnbr_fd(int n, int fd)
 {
-	t_board		board;
+	size_t	len;
+	char	num[20];
+	int		d;
 
-	if (ac != 3)
+	len = 0;
+	if (n < 0 && ++len)
+		num[0] = '-';
+	d = n;
+	while (++len && (d < -9 || d > 9))
+		d /= 10;
+	if (len > 20)
+		return (-1);
+	d = len;
+	if (!n)
+		num[0] = '0';
+	while (n)
 	{
-		ft_dprintf(STDERR_FILENO, USAGE);
-		return (EXIT_FAILURE);
+		num[--d] = n % 10 * ((n > 0) * 2 - 1) + '0';
+		n /= 10;
 	}
-	if (init_game(&board, av[1], av[2]))
-		return (EXIT_FAILURE);
-	
-	game_loop(&board);
-
-	for (int i = 0; i < board.height; ++i)
-		free(board.map[i]);
-	free(board.map);
-	return (EXIT_SUCCESS);
+	return (write(fd, num, len));
 }
-
-

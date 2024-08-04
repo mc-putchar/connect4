@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcutura <mcutura@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/03 15:50:17 by mcutura           #+#    #+#             */
-/*   Updated: 2024/08/04 18:45:33 by mcutura          ###   ########.fr       */
+/*   Created: 2023/03/18 05:19:27 by mcutura           #+#    #+#             */
+/*   Updated: 2024/03/16 14:06:52 by mcutura          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "connect4.h"
+#include <stdlib.h>
 
-int	main(int ac, char **av)
+char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
-	t_board		board;
+	size_t	memsize;
+	size_t	i;
+	char	*sub;
 
-	if (ac != 3)
+	memsize = 1;
+	i = 0;
+	if (s)
 	{
-		ft_dprintf(STDERR_FILENO, USAGE);
-		return (EXIT_FAILURE);
+		while (s[i] && i < (size_t)start)
+			++i;
+		while (s[i++] && len--)
+			++memsize;
 	}
-	if (init_game(&board, av[1], av[2]))
-		return (EXIT_FAILURE);
-	
-	game_loop(&board);
-
-	for (int i = 0; i < board.height; ++i)
-		free(board.map[i]);
-	free(board.map);
-	return (EXIT_SUCCESS);
+	sub = malloc(memsize);
+	if (!sub)
+		return (NULL);
+	sub[--memsize] = 0;
+	while (memsize--)
+		sub[memsize] = s[start + memsize];
+	return (sub);
 }
-
-
